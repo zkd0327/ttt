@@ -1,8 +1,17 @@
-stations = ["동인천", "도원", "제물포", "도화", "주안", "간석", "동암","백운", "부평", "부개", "송내", "중동", "부천", "소사", "역곡", "온수", "오류동", "개봉", "구로", "구일"]
-station_to_number = {station: idx for idx, station in enumerate(stations)}
+stations = ["동인천", "도원", "제물포", "도화", "주안", "간석", "동암", "백운", "부평", "부개", "송내", "중동", "부천", "소사", "역곡", "온수", "오류동", "개봉", "구로", "구일"]
 
-print(station_to_number)
+def find_path_by_index(start_idx, end_idx, stations):
+    if 0 <= start_idx < len(stations) and 0 <= end_idx < len(stations):
+        if start_idx <= end_idx:
+            path = stations[start_idx:end_idx + 1]
+        else:
+            path = stations[end_idx:start_idx + 1][::-1]
+        return path
+    else:
+        return "역 번호가 범위를 벗어났습니다."
 
-{'동인천': 0,'도원': 1,'제물포': 2, '도화': 3, '주안': 4,'간석': 5,'동암': 6,'백운': 7,'부평': 8,'부개': 9,'송내': 10,'중동': 11,'부천': 12,'소사': 13,'역곡': 14,'온수': 15,'오류동': 16,'개봉': 17,'구로': 18,'구일': 19}
-number_to_station = {idx: station for idx, station in enumerate(stations)}
-print(number_to_station[10])
+# 예: 동인천(0)에서 송내(10)까지
+start_station_num = 0  # 동인천
+end_station_num = 10   # 송내
+
+
