@@ -1,23 +1,32 @@
-stations = ["동인천", "도원", "제물포", "도화", "주안", "간석", "동암", "백운", "부평", "부개", "송내", "중동", "부천", "소사", "역곡", "온수", "오류동", "개봉", "구로", "구일"]
+stations = ["동인천", "도원", "제물포", "도화", "주안", "간석", "동암", "백운", "부평", "부개", "송내", 
+            "중동", "부천", "소사", "역곡", "온수", "오류동", "개봉", "구로", "구일"]
 
-def count_and_list_passed_stations(start_name, end_name, stations):
-    try:
-        start_idx = stations.index(start_name)
-        end_idx = stations.index(end_name)
+def find_path_and_time(start_name, end_name, stations, avg_time_per_stop=2.5):
+    if start_name not in stations:
+        return f"출발역 '{start_name}'이(가) 목록에 없습니다."
+    if end_name not in stations:
+        return f"도착역 '{end_name}'이(가) 목록에 없습니다."
 
-        if start_idx < end_idx:
-            passed_stations = stations[start_idx + 1:end_idx]
-        else:
-            passed_stations = stations[end_idx + 1:start_idx][::-1]
+    start_idx = stations.index(start_name)
+    end_idx = stations.index(end_name)
 
-        return len(passed_stations), passed_stations
-    except ValueError:
-        return "입력한 역 이름이 목록에 없습니다."
+    if start_idx <= end_idx:
+        path = stations[start_idx:end_idx + 1]
+    else:
+        path = stations[end_idx:start_idx + 1][::-1]
+
+    num_stops = len(path) - 1
+    total_time = num_stops * avg_time_per_stop
+    path_str = " → ".join(path)
+    
+    return (
+        f"경로: {path_str}\n"
+        f"총 정차역 수: {len(path)}\n"
+        f"예상 소요 시간: 약 {total_time:.1f}분"
+    )
 
 start_station = "동인천"
 end_station = "송내"
 
-passed_count, passed_names = count_and_list_passed_stations(start_station, end_station, stations)
-
-print(f"{start_station}에서 {end_station}까지 사이에 지나치는 역은 {passed_count}개입니다.")
-print("지나는 역 목록:", passed_names)
+result = find_path_and_time(start_station, end_station, stations)
+print(result)
